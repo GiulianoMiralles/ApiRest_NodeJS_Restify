@@ -24,6 +24,12 @@ server.get('/users', (req, res, next) => {
     res.end(JSON.stringify(users));
 });
 
+server.get('/users/:id', (req, res, next) => {
+    res.setHeader('Content-Type', 'applications/json');
+    res.writeHead(200);
+    res.end(JSON.stringify(users[parseInt(req.params.id)]));
+});
+
 //Start server
 server.listen(3000, () => {
     console.log('server on port 3000');
