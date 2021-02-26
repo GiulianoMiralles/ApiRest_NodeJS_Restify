@@ -53,7 +53,14 @@ server.put('/users/:id', (req, res, next) => {
     res.setHeader('Content-Type', 'applications/json');
     res.writeHead(200);
     res.end(JSON.stringify(updateUser));
-})
+});
+
+server.del('/users/:id', (req, res, next) => {
+    delete users[parseInt(req.params.id)];
+    res.setHeader('Content-Type', 'applications/json');
+    res.writeHead(200);
+    res.end(JSON.stringify(true));
+});
 
 //Start server
 server.listen(3000, () => {
