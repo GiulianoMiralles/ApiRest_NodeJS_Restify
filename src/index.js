@@ -17,6 +17,10 @@ const users = {
     }
 };
 
+let userCount = 2;
+
+
+
 //Routes
 server.get('/users', (req, res, next) => {
     res.setHeader('Content-Type', 'applications/json');
@@ -29,6 +33,27 @@ server.get('/users/:id', (req, res, next) => {
     res.writeHead(200);
     res.end(JSON.stringify(users[parseInt(req.params.id)]));
 });
+
+server.post('/users', (req, res, next) => {
+    let newUser = req.body;
+    userCount++;
+    newUser.id = userCount;
+    users[newUser.id] = newUser;
+    res.setHeader('Content-Type', 'applications/json');
+    res.writeHead(200);
+    res.end(JSON.stringify(newUser));
+});
+
+server.put('/users/:id', (req, res, next) => {
+    const updateUser = users[parseInt(req.params.id)];
+    const update = req.body;
+    for(let field in update) {
+        updateUser[field] = update[field]
+    }
+    res.setHeader('Content-Type', 'applications/json');
+    res.writeHead(200);
+    res.end(JSON.stringify(updateUser));
+})
 
 //Start server
 server.listen(3000, () => {
